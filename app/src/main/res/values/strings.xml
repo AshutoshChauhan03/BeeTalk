@@ -47,7 +47,9 @@ Imperdiet proin fermentum leo vel orci porta non pulvinar. Cursus mattis molesti
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sample_user">Sample User</string>
     <string name="tap_to_send_a_message">Tap to send a message</string>
-    <string name="_6_00_pm">6:00 PM</string>
+    <string name="_6_00_pm">11:00 PM</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="sample_message">Sample Message</string>
 
 
 </resources>

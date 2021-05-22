@@ -10,9 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BeeTalk">
-        <activity android:name=".Activity.ProfileInfoActivity"
+        <activity android:name=".Activity.ChatActivity"
+            android:windowSoftInputMode="stateVisible"/>
+        <activity
+            android:name=".Activity.ProfileInfoActivity"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".Activity.OTPActivity" />
+        <activity android:name=".Activity.OTPActivity"
+            android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".Activity.TermsAndCondition" />
         <activity
             android:name=".Activity.LogInActivity"

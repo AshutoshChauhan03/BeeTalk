@@ -62,4 +62,6 @@ dependencies {
 
     implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
 
+    implementation "com.github.pgreze:android-reactions:1.5.1"
+
 }

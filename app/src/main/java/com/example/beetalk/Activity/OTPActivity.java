@@ -17,6 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.Objects;
@@ -26,6 +30,7 @@ public class OTPActivity extends AppCompatActivity {
 
     ActivityOTPBinding binding;
     FirebaseAuth auth;
+    FirebaseDatabase database;
     String verificationId;
     ProgressDialog dialog;
 
@@ -39,6 +44,7 @@ public class OTPActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         String phoneNumber = getIntent().getStringExtra("phoneNumber");
         binding.phoneLbl.setText("Verify : " + phoneNumber);
@@ -82,6 +88,8 @@ public class OTPActivity extends AppCompatActivity {
 
         PhoneAuthProvider.verifyPhoneNumber(options);
 
+        binding.otpView.requestFocus();
+
         binding.otpView.setOtpCompletionListener(otp -> {
 
             if (! internet()){
@@ -100,12 +108,37 @@ public class OTPActivity extends AppCompatActivity {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
             auth.signInWithCredential(credential).addOnCompleteListener(task -> {
 
-                Intent intent = new Intent();
-
                 if (task.isSuccessful()){
-                    intent.setClass(this, ProfileInfoActivity.class);
-                    startActivity(intent);
-                    finishAffinity();
+
+                    database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String name = snapshot.child(Objects.requireNonNull(auth.getUid())).child("name").getValue(String.class);
+
+                            if (name != null) {
+                                new StyleableToast
+                                        .Builder(OTPActivity.this)
+                                        .text("Welcome " + name)
+                                        .textColor(Color.WHITE)
+                                        .backgroundColor(Color.BLACK)
+                                        .cornerRadius(20)
+                                        .show();
+                                Intent intent = new Intent(OTPActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Intent intent = new Intent(OTPActivity.this, ProfileInfoActivity.class);
+                                startActivity(intent);
+                            }
+                            finishAffinity();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
                 else {
                     new StyleableToast
@@ -114,6 +147,7 @@ public class OTPActivity extends AppCompatActivity {
                             .text("Invalid OTP")
                             .textColor(Color.WHITE)
                             .show();
+                    binding.otpView.setText("");
                 }
 
                 dialog.dismiss();

@@ -5,6 +5,7 @@ public class User {
     String uid, name, phoneNumber, profilePicture;
 
     public User() {
+
     }
 
     public User(String uid, String name, String phoneNumber, String profilePicture) {

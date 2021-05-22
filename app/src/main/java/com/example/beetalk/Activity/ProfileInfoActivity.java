@@ -92,6 +92,7 @@ public class ProfileInfoActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                         Intent intent = new Intent(ProfileInfoActivity.this, MainActivity.class);
                                         startActivity(intent);
+                                        finishAffinity();
                                     });
 
                         });
@@ -127,6 +128,7 @@ public class ProfileInfoActivity extends AppCompatActivity {
                             dialog.dismiss();
                             Intent intent = new Intent(ProfileInfoActivity.this, MainActivity.class);
                             startActivity(intent);
+                            finishAffinity();
                         });
             }
 
