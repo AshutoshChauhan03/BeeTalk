@@ -1,18 +1,25 @@
 package com.example.beetalk.Models;
 
 public class Message {
-    private String message, messageId, senderId;
-    private long time;
     private int feeling = -1;
+    private String message, photoUrl, senderId;
+    private long time;
+    private String messageId;
 
-    public Message(){
-
-    }
-
-    public Message(String message, String senderId, long time) {
+    public Message(int feeling, String message, String photoUrl, String senderId, long time) {
+        this.feeling = feeling;
         this.message = message;
+        this.photoUrl = photoUrl;
         this.senderId = senderId;
         this.time = time;
+    }
+
+    public int getFeeling() {
+        return feeling;
+    }
+
+    public void setFeeling(int feeling) {
+        this.feeling = feeling;
     }
 
     public String getMessage() {
@@ -23,12 +30,12 @@ public class Message {
         this.message = message;
     }
 
-    public String getMessageId() {
-        return messageId;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public String getSenderId() {
@@ -47,11 +54,11 @@ public class Message {
         this.time = time;
     }
 
-    public int getFeeling() {
-        return feeling;
+    public String getMessageId() {
+        return messageId;
     }
 
-    public void setFeeling(int feeling) {
-        this.feeling = feeling;
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 }

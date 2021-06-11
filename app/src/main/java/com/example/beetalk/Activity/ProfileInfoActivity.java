@@ -1,8 +1,5 @@
 package com.example.beetalk.Activity;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.beetalk.Models.User;
 import com.example.beetalk.databinding.ActivityProfileInfoBinding;
@@ -46,7 +46,6 @@ public class ProfileInfoActivity extends AppCompatActivity {
 
         dialog = new ProgressDialog(this);
         dialog.setCancelable(false);
-        dialog.setMessage("Setting Up Profile...");
 
         binding.profilePic.setOnClickListener(v -> {
             Intent intent = new Intent();
@@ -72,8 +71,9 @@ public class ProfileInfoActivity extends AppCompatActivity {
                         .show();
             else if (selectedImage != null){
 
+                dialog.setMessage("Setting Up Profile...");
                 dialog.show();
-                StorageReference reference = storage.getReference().child("ProfilePictures").child(Objects.requireNonNull(auth.getUid()));
+                StorageReference reference = storage.getReference().child("profilePictures").child(Objects.requireNonNull(auth.getUid()));
                 reference.putFile(selectedImage).addOnCompleteListener(task -> {
 
                     if (task.isSuccessful()){
@@ -84,9 +84,10 @@ public class ProfileInfoActivity extends AppCompatActivity {
                             String phoneNumber = Objects.requireNonNull(auth.getCurrentUser()).getPhoneNumber();
                             String profilePicture = uri.toString();
 
-                            User user = new User(uid, name, phoneNumber, profilePicture);
+                            User user = new User(name, phoneNumber, profilePicture, uid);
 
-                            database.getReference().child("Users").child(Objects.requireNonNull(auth.getUid()))
+                            database.getReference().child("users").child(Objects.requireNonNull(auth.getUid()))
+                                    .child("details")
                                     .setValue(user)
                                     .addOnSuccessListener(aVoid -> {
                                         dialog.dismiss();
@@ -115,14 +116,16 @@ public class ProfileInfoActivity extends AppCompatActivity {
 
             else {
 
+                dialog.setMessage("Setting Up Profile...");
                 dialog.show();
                 String uid = Objects.requireNonNull(auth.getUid());
                 String phoneNumber = Objects.requireNonNull(auth.getCurrentUser()).getPhoneNumber();
                 String profilePicture = "NULL";
 
-                User user = new User(uid, name, phoneNumber, profilePicture);
+                User user = new User(name, phoneNumber, profilePicture, uid);
 
-                database.getReference().child("Users").child(Objects.requireNonNull(auth.getUid()))
+                database.getReference().child("users").child(Objects.requireNonNull(auth.getUid()))
+                        .child("details")
                         .setValue(user)
                         .addOnSuccessListener(aVoid -> {
                             dialog.dismiss();

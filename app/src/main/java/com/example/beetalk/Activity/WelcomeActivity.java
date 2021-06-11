@@ -28,7 +28,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
 
         binding.button.setOnClickListener(v -> {
-            Intent intent = new Intent(this , LogInActivity.class);
+            Intent intent = new Intent(this , PhoneNumberActivity.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });

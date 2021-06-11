@@ -49,30 +49,52 @@ public class MainActivity extends AppCompatActivity {
 
         binding.chatRecycler.showShimmerAdapter();
 
-        database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+        Toast.makeText(MainActivity.this, "dk" + database.getReference().child("chats").getKey(), Toast.LENGTH_SHORT).show();
+        
+        if (database.getReference().child("chats").getKey() != null) {
+            database.getReference().child("chats").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    users.clear();
+                    for (DataSnapshot receiver:snapshot.getChildren()) {
 
-                users.clear();
-                for (DataSnapshot snapshot1:snapshot.getChildren()){
-                    User user = snapshot1.getValue(User.class);
-                    assert user != null;
-                    if (! Objects.equals(auth.getUid(), user.getUid()))
-                        users.add(user);
+                        database.getReference().child("users").child(receiver.toString()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                User user = snapshot.child("details").getValue(User.class);
+                                Toast.makeText(MainActivity.this, "name" + user.getName(), Toast.LENGTH_SHORT).show();
+                                assert user != null;
+                                if (! Objects.equals(auth.getUid(), user.getUid())) {
+                                    users.add(user);
+                                }
+                                userAdapter.notifyDataSetChanged();
+                                binding.chatRecycler.hideShimmerAdapter();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
                 }
-                userAdapter.notifyDataSetChanged();
-                binding.chatRecycler.hideShimmerAdapter();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        else {
+            binding.chatRecycler.hideShimmerAdapter();
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent();
         switch (item.getItemId()){
             case R.id.search:
                 Toast.makeText(this,"Search", Toast.LENGTH_SHORT).show();
@@ -84,14 +106,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Invite", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.settings:
-                Intent intent = new Intent(this, ProfileInfoActivity.class);
+                intent.setClass(this, ProfileInfoActivity.class);
                 startActivity(intent);
-                Toast.makeText(this,"Settings", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                Intent intent2 = new Intent(MainActivity.this, WelcomeActivity.class);
-                startActivity(intent2);
+                intent.setClass(MainActivity.this, WelcomeActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finishAffinity();
                 break;
         }

@@ -67,12 +67,15 @@ public class OTPActivity extends AppCompatActivity {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Intent intent = new Intent(OTPActivity.this, LogInActivity.class);
+                        Intent intent = new Intent(OTPActivity.this, PhoneNumberActivity.class);
                         startActivity(intent);
+                        finish();
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
                         new StyleableToast
                                 .Builder(OTPActivity.this)
                                 .backgroundColor(Color.BLACK)
-                                .text("Phone Number Verification Failed")
+                                .text("Verification Failed")
                                 .textColor(Color.WHITE)
                                 .show();
                         dialog.dismiss();
@@ -110,11 +113,10 @@ public class OTPActivity extends AppCompatActivity {
 
                 if (task.isSuccessful()){
 
-                    database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+                    database.getReference().child("users").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String name = snapshot.child(Objects.requireNonNull(auth.getUid())).child("name").getValue(String.class);
-
+                            String name = snapshot.child(Objects.requireNonNull(auth.getUid())).child("details").child("name").getValue(String.class);
                             if (name != null) {
                                 new StyleableToast
                                         .Builder(OTPActivity.this)
@@ -130,6 +132,7 @@ public class OTPActivity extends AppCompatActivity {
                                 Intent intent = new Intent(OTPActivity.this, ProfileInfoActivity.class);
                                 startActivity(intent);
                             }
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             finishAffinity();
                         }
 

@@ -2,6 +2,7 @@ package com.example.beetalk.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.Objects;
 import java.util.Timer;
@@ -45,10 +47,10 @@ public class BootActivity extends AppCompatActivity {
         binding.textView2.startAnimation(animation);
 
         if (auth.getCurrentUser() != null) {
-            database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
+            database.getReference().child("users").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String name = snapshot.child(Objects.requireNonNull(auth.getUid())).child("name").getValue(String.class);
+                    String name = snapshot.child(Objects.requireNonNull(auth.getUid())).child("details").child("name").getValue(String.class);
 
                     Intent intent;
                     if (name != null) {
@@ -63,7 +65,21 @@ public class BootActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    new StyleableToast
+                            .Builder(BootActivity.this)
+                            .text("Database Error\nContact Developer")
+                            .textColor(Color.WHITE)
+                            .backgroundColor(Color.BLACK)
+                            .show();
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(BootActivity.this, WelcomeActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
+                        }
+                    }, 1500);
                 }
             });
         }
@@ -74,6 +90,7 @@ public class BootActivity extends AppCompatActivity {
                 public void run() {
                     Intent intent = new Intent(BootActivity.this, WelcomeActivity.class);
                     startActivity(intent);
+                    finishAffinity();
                 }
             }, 1500);
         }

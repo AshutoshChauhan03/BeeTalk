@@ -53,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(receiver_Name);
 
         messages = new ArrayList<>();
-        messageAdapter = new MessageAdapter(this, messages);
+        messageAdapter = new MessageAdapter(this, messages, SENDER_ROOM, RECEIVER_ROOM);
         binding.recyclerView.setAdapter(messageAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -103,7 +103,7 @@ public class ChatActivity extends AppCompatActivity {
                         .show();
             }
             Date date = new Date();
-            Message message = new Message(message_txt.trim(), sender_Uid, date.getTime());
+            Message message = new Message(-1, message_txt.trim(), "NULL", sender_Uid, date.getTime());
 
             String unique_key = Objects.requireNonNull(database.getReference()).push().getKey();
 

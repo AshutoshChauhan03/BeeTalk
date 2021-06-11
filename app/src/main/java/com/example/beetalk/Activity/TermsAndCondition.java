@@ -23,8 +23,9 @@ public class TermsAndCondition extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         binding.textView7.setMovementMethod(new ScrollingMovementMethod());
+
         binding.button2.setOnClickListener(v -> {
-            Intent intent = new Intent(this, LogInActivity.class);
+            Intent intent = new Intent(this, PhoneNumberActivity.class);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });

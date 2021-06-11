@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.beetalk">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="false"
         android:fullBackupContent="false"
@@ -19,7 +20,7 @@
             android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".Activity.TermsAndCondition" />
         <activity
-            android:name=".Activity.LogInActivity"
+            android:name=".Activity.PhoneNumberActivity"
             android:windowSoftInputMode="stateVisible" />
         <activity android:name=".Activity.WelcomeActivity" />
         <activity android:name=".Activity.BootActivity">

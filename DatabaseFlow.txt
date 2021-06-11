@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------------------
+
+DATABASE ----->
+
+
+Chats - ( id = "chats" )
+	- auth.getUid - ( id = auth.getUid )
+		- receiverUid - ( id = receiverId )
+			- Sender Room - ( id = "Sender Room" )
+				- messageId (same random key) 
+					- feeling
+					- message
+					- photoUrl
+					- senderId	
+					- time
+			- Receiver Room - ( id = "Receiver Room" )
+				- messageId (same random key)
+					- feeling
+					- message
+					- photoUrl
+					- senderId	
+					- time
+
+Users - ( id = "users" )
+	- auth.getUid - ( id = auth.getUid )
+		   - details - ( id = "details" )
+			- name
+			- phoneNumber
+			- profilePicture
+			- uId		    
+		   - recentMessage ( id = "recentMessage" )
+		   - recentTime  ( id = "recentTime" ) 
+
+
+---------------------------------------------------------------------------------------
+
+
+STORAGE ---->
+
+
+- profilePictures - ( id = "profilePicture" )
+- photoSent - ( id = "photoSent" )
+
+	
+---------------------------------------------------------------------------------------

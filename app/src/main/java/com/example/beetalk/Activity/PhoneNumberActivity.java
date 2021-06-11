@@ -8,19 +8,19 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.beetalk.databinding.ActivityLogInBinding;
+import com.example.beetalk.databinding.ActivityPhoneNumberBinding;
 import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.Objects;
 
-public class LogInActivity extends AppCompatActivity {
+public class PhoneNumberActivity extends AppCompatActivity {
 
-    ActivityLogInBinding binding;
+    ActivityPhoneNumberBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLogInBinding.inflate(getLayoutInflater());
+        binding = ActivityPhoneNumberBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         Objects.requireNonNull(getSupportActionBar()).hide();

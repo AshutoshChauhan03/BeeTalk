@@ -2,24 +2,17 @@ package com.example.beetalk.Models;
 
 public class User {
 
-    String uid, name, phoneNumber, profilePicture;
+    String name, phoneNumber, profilePicture, uid;
+    String recentMessage, recentTime;
 
     public User() {
 
     }
 
-    public User(String uid, String name, String phoneNumber, String profilePicture) {
-        this.uid = uid;
+    public User(String name, String phoneNumber, String profilePicture, String uid) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.profilePicture = profilePicture;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
         this.uid = uid;
     }
 
@@ -45,5 +38,29 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getRecentMessage() {
+        return recentMessage;
+    }
+
+    public void setRecentMessage(String recentMessage) {
+        this.recentMessage = recentMessage;
+    }
+
+    public String getRecentTime() {
+        return recentTime;
+    }
+
+    public void setRecentTime(String recentTime) {
+        this.recentTime = recentTime;
     }
 }
